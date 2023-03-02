@@ -38,3 +38,11 @@ endpoint = tcp://localhost:8529
 ```bash
 shell> arango-secure-installation
 ```
+
+## Alt Linux 8 SP
+
+На версии Альт Линукс 8 СП работает версия Arango 3.8.
+Установка возможна из пакета .rpm
+
+
+

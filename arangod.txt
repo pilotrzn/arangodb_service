@@ -1,0 +1,310 @@
+Usage: arangod [<options>]
+
+Section 'global options' (Global configuration)
+  --configuration <string>                                     the configuration file or 'none' (default: "")
+  --console <boolean>                                          start a JavaScript emergency console (default: false)
+  --version <boolean>                                          reports the version and exits
+
+Section 'agency' (Configure the agency)
+  --agency.activate <boolean>                                  Activate agency (default: false)
+  --agency.compaction-keep-size <uint64>                       keep as many indices before compaction point (default: 50000)
+  --agency.election-timeout-max <double>                       maximum timeout before an agent calls for new election (in seconds) (default: 5)
+  --agency.election-timeout-min <double>                       minimum timeout before an agent calls for new election (in seconds) (default: 1)
+  --agency.endpoint <string...>                                agency endpoints (default: )
+  --agency.my-address <string>                                 which address to advertise to the outside (default: "")
+  --agency.pool-size <uint64>                                  number of agent pool (default: 1)
+  --agency.size <uint64>                                       number of agents (default: 1)
+  --agency.supervision <boolean>                               perform arangodb cluster supervision (default: false)
+  --agency.supervision-frequency <double>                      arangodb cluster supervision frequency (in seconds) (default: 1)
+  --agency.supervision-grace-period <double>                   supervision time, after which a server is considered to have failed (in seconds) (default: 10)
+  --agency.supervision-ok-threshold <double>                   supervision time, after which a server is considered to be bad [s] (default: 5)
+
+Section 'arangosearch' (Configure the ArangoSearch feature)
+  --arangosearch.commit-threads <uint32>                       upper limit to the allowed number of commit threads (0 == autodetect) (default: 0) (introduced in 
+                                                               v3.7.5)
+  --arangosearch.commit-threads-idle <uint32>                  upper limit to the allowed number of idle threads to use for commit tasks (0 == autodetect) 
+                                                               (default: 0) (introduced in v3.7.5)
+  --arangosearch.consolidation-threads <uint32>                upper limit to the allowed number of consolidation threads (0 == autodetect) (default: 0) 
+                                                               (introduced in v3.7.5)
+  --arangosearch.consolidation-threads-idle <uint32>           upper limit to the allowed number of idle threads to use for consolidation tasks (0 == autodetect) 
+                                                               (default: 0) (introduced in v3.7.5)
+  --arangosearch.threads <uint32>                              the exact number of threads to use for asynchronous tasks (0 == autodetect) (default: 0) 
+                                                               (deprecated in v3.7.5)
+  --arangosearch.threads-limit <uint32>                        upper limit to the autodetected number of threads to use for asynchronous tasks (0 == use default) 
+                                                               (default: 0) (deprecated in v3.7.5)
+
+Section 'cache' (Configure the hash cache)
+  --cache.rebalancing-interval <uint64>                        microseconds between rebalancing attempts (default: 2000000)
+  --cache.size <uint64>                                        size of cache in bytes (default: 268435456)
+
+Section 'cluster' (Configure the cluster)
+  --cluster.agency-endpoint <string...>                        agency endpoint to connect to (default: )
+  --cluster.api-jwt-policy <string>                            access permissions required for accessing /_admin/cluster REST APIs (jwt-all = JWT required to 
+                                                               access all operations, jwt-write = JWT required for post/put/delete operations, jwt-compat = 3.7 
+                                                               compatibility mode). Possible values: "jwt-all", "jwt-compat", "jwt-write" (default: "jwt-compat") 
+                                                               (introduced in v3.8.0)
+  --cluster.default-replication-factor <uint32>                default replication factor for non-system collections (default: 0) (introduced in v3.6.0)
+  --cluster.force-one-shard <boolean>                          force one-shard mode for all new collections (default: false) (introduced in v3.6.0)
+  --cluster.max-number-of-shards <uint32>                      maximum number of shards when creating new collections (0 = unrestricted) (default: 1000) 
+                                                               (introduced in v3.5.1)
+  --cluster.max-replication-factor <uint32>                    maximum replication factor for new collections (0 = unrestricted) (default: 10) (introduced in v3.
+                                                               6.0)
+  --cluster.min-replication-factor <uint32>                    minimum replication factor for new collections (default: 1) (introduced in v3.6.0)
+  --cluster.my-address <string>                                this server's endpoint (cluster internal) (default: "")
+  --cluster.my-advertised-endpoint <string>                    this server's advertised endpoint (e.g. external IP address or load balancer, optional) (default: 
+                                                               "")
+  --cluster.my-role <string>                                   this server's role (default: "")
+  --cluster.require-persisted-id <boolean>                     if set to true, then the instance will only start if a UUID file is found in the database on 
+                                                               startup. Setting this option will make sure the instance is started using an already existing 
+                                                               database directory and not a new one. For the first start, the UUID file must either be created 
+                                                               manually or the option must be set to false for the initial startup (default: false)
+  --cluster.synchronous-replication-timeout-factor <double>    all synchronous replication timeouts are multiplied by this factor (default: 1)
+  --cluster.synchronous-replication-timeout-maximum <double>   all synchronous replication timeouts will be at most this value (in seconds) (default: 3600) 
+                                                               (introduced in v3.8.0)
+  --cluster.synchronous-replication-timeout-minimum <double>   all synchronous replication timeouts will be at least this value (in seconds) (default: 900)
+  --cluster.system-replication-factor <uint32>                 default replication factor for system collections (default: 2)
+  --cluster.upgrade <string>                                   perform a cluster upgrade if necessary (auto = perform upgrade and shut down only if `--database.
+                                                               auto-upgrade true` is set, disable = never perform upgrade, force = always perform an upgrade and 
+                                                               shut down, online = always perform an upgrade but don't shut down). Possible values: "auto", 
+                                                               "disable", "force", "online" (default: "auto")
+  --cluster.write-concern <uint32>                             write concern used for writes to new collections (default: 1) (introduced in v3.6.0)
+
+Section 'database' (Configure the database)
+  --database.auto-upgrade <boolean>                            perform a database upgrade if necessary (default: false)
+  --database.directory <string>                                path to the database directory (default: "")
+  --database.required-directory-state <string>                 required state of database directory at startup (non-existing: database directory must not exist, 
+                                                               existing: database directory must exist, empty: database directory must exist but be empty, 
+                                                               populated: database directory must exist and contain specific files already, any: any state 
+                                                               allowed). Possible values: "any", "empty", "existing", "non-existing", "populated" (default: "any")
+
+Section 'foxx' (Configure Foxx)
+  --foxx.api <boolean>                                         enables Foxx management REST APIs (default: true) (introduced in v3.5.0)
+  --foxx.force-update-on-startup <boolean>                     ensure all Foxx services are synchronized before completeing the boot sequence (default: false) 
+                                                               (introduced in v3.7.5)
+  --foxx.queues <boolean>                                      enable Foxx queues (default: true)
+  --foxx.queues-poll-interval <double>                         poll interval (in seconds) for Foxx queue manager (default: 1)
+  --foxx.store <boolean>                                       enables Foxx store in web interface (default: true) (introduced in v3.5.0)
+
+Section 'frontend' (Configure the frontend)
+  --frontend.proxy-request-check <boolean>                     enable proxy request checking (default: true)
+  --frontend.trusted-proxy <string...>                         list of proxies to trust (may be IP or network). Make sure --frontend.proxy-request-check is 
+                                                               enabled (default: )
+
+Section 'http' (HttpServer features)
+  --http.hide-product-header <boolean>                         do not expose "Server: ArangoDB" header in HTTP responses (default: false) (deprecated in v3.8.0)
+  --http.keep-alive-timeout <double>                           keep-alive timeout in seconds (default: 300)
+  --http.permanently-redirect-root <boolean>                   if true, use a permanent redirect. If false, use a temporary (default: true) (introduced in v3.7.
+                                                               12)
+  --http.redirect-root-to <string>                             redirect of root URL (default: "/_admin/aardvark/index.html") (introduced in v3.7.12)
+  --http.trusted-origin <string...>                            trusted origin URLs for CORS requests with credentials (default: )
+
+Section 'javascript' (Configure the JavaScript engine)
+  --javascript.app-path <string>                               directory for Foxx applications (default: "")
+  --javascript.copy-installation <boolean>                     copy contents of 'javascript.startup-directory' on first start (default: false)
+  --javascript.endpoints-allowlist <string...>                 endpoints that can be connected to via @arangodb/request module in JavaScript actions (default: ) 
+                                                               (introduced in v3.5.0)
+  --javascript.endpoints-denylist <string...>                  endpoints that cannot be connected to via @arangodb/request module in JavaScript actions (if not 
+                                                               in allowlist) (default: ) (introduced in v3.5.0)
+  --javascript.environment-variables-allowlist <string...>     environment variables that will be accessible in JavaScript (default: ) (introduced in v3.5.0)
+  --javascript.environment-variables-denylist <string...>      environment variables that will be inaccessible in JavaScript (if not in allowlist) (default: ) 
+                                                               (introduced in v3.5.0)
+  --javascript.files-allowlist <string...>                     filesystem paths that will be accessible from within JavaScript actions (default: ) (introduced in 
+                                                               v3.5.0)
+  --javascript.harden <boolean>                                disables access to JavaScript functions in the internal module: getPid() and logLevel() (default: 
+                                                               false) (introduced in v3.5.0)
+  --javascript.script <string...>                              run scripts and exit (default: )
+  --javascript.script-parameter <string...>                    script parameter (default: )
+  --javascript.startup-directory <string>                      path to the directory containing JavaScript startup scripts (default: "")
+  --javascript.startup-options-allowlist <string...>           startup options whose names match this regular expression will be allowed and exposed to 
+                                                               JavaScript (default: ) (introduced in v3.5.0)
+  --javascript.startup-options-denylist <string...>            startup options whose names match this regular expression will not be exposed (if not in 
+                                                               allowlist) to JavaScript actions (default: ) (introduced in v3.5.0)
+  --javascript.tasks <boolean>                                 enable JavaScript tasks (default: true) (introduced in v3.8.0)
+  --javascript.transactions <boolean>                          enable JavaScript transactions (default: true) (introduced in v3.8.0)
+  --javascript.v8-contexts <uint64>                            maximum number of V8 contexts that are created for executing JavaScript actions (default: 0)
+  --javascript.v8-contexts-minimum <uint64>                    minimum number of V8 contexts that keep available for executing JavaScript actions (default: 0)
+  --javascript.v8-max-heap <uint64>                            maximal heap size (in MB) (default: 3072)
+
+Section 'log' (Configure the logging)
+  --log.api-enabled <string>                                   whether the log api is enabled (true) or not (false), or only enabled for superuser JWT (jwt) 
+                                                               (default: "true") (introduced in v3.4.11, v3.5.6, v3.6.5)
+  --log.color <boolean>                                        use colors for TTY logging (default: true)
+  --log.escape <boolean>                                       escape characters when logging (default: true)
+  --log.file-group <string>                                    group to use for new log file, user must be a member of this group (default: "") (introduced in v3.
+                                                               4.5)
+  --log.file-mode <string>                                     mode to use for new log file, umask will be applied as well (default: "") (introduced in v3.4.5)
+  --log.hostname <string>                                      hostname to use in log message (empty for none, use 'auto' to automatically figure out hostname) 
+                                                               (default: "") (introduced in v3.8.0)
+  --log.ids <boolean>                                          log unique message ids (default: true) (introduced in v3.5.0)
+  --log.level <string...>                                      the global or topic-specific log level (default: "info")
+  --log.max-entry-length <uint32>                              maximum length of a log entry (in bytes) (default: 134217728) (introduced in v3.7.9)
+  --log.output <string...>                                     log destination(s), e.g. file:///path/to/file (any '$PID' will be replaced with the process id) 
+                                                               (default: )
+  --log.role <boolean>                                         log server role (default: false)
+  --log.time-format <string>                                   time format to use in logs. Possible values: "local-datestring", "timestamp", "timestamp-micros", 
+                                                               "timestamp-millis", "uptime", "uptime-micros", "uptime-millis", "utc-datestring", 
+                                                               "utc-datestring-millis" (default: "utc-datestring") (introduced in v3.5.0)
+  --log.use-json-format <boolean>                              use json output format (default: false) (introduced in v3.8.0)
+
+Section 'network' (Configure cluster-internal networking)
+  --network.idle-connection-ttl <uint64>                       default time-to-live of idle connections for cluster-internal communication (in milliseconds) 
+                                                               (default: 120000) (introduced in v3.6.0)
+  --network.io-threads <uint32>                                number of network IO threads for cluster-internal communication (default: 2) (introduced in v3.6.0)
+  --network.max-open-connections <uint64>                      max open TCP connections for cluster-internal communication per endpoint (default: 1024) 
+                                                               (introduced in v3.6.0)
+  --network.protocol <string>                                  network protocol to use for cluster-internal communication. Possible values: "", "h2", "http", 
+                                                               "http2", "vst" (default: "") (introduced in v3.7.0)
+  --network.verify-hosts <boolean>                             verify hosts when using TLS in cluster-internal communication (default: false) (introduced in v3.6.
+                                                               0)
+
+Section 'nonce' (Configure the nonces)
+  --nonce.size <uint64>                                        the size of the hash array for nonces (default: 4194304)
+
+Section 'query' (Configure queries)
+  --query.allow-collections-in-expressions <boolean>           allow full collections to be used in AQL expressions (default: true) (introduced in v3.8.0)
+  --query.cache-entries <uint64>                               maximum number of results in query result cache per database (default: 128)
+  --query.cache-entries-max-size <uint64>                      maximum cumulated size of results in query result cache per database (default: 268435456)
+  --query.cache-entry-max-size <uint64>                        maximum size of an invidiual result entry in query result cache (default: 16777216)
+  --query.cache-include-system-collections <boolean>           whether or not to include system collection queries in the query result cache (default: false)
+  --query.cache-mode <string>                                  mode for the AQL query result cache (on, off, demand) (default: "off")
+  --query.fail-on-warning <boolean>                            whether AQL queries should fail with errors even for recoverable warnings (default: false)
+  --query.global-memory-limit <uint64>                         memory threshold for all AQL queries combined (in bytes, 0 = no limit) (default: 1636521984) 
+                                                               (introduced in v3.8.0)
+  --query.max-runtime <double>                                 runtime threshold for AQL queries (in seconds, 0 = no limit) (default: 0) (introduced in v3.6.7, 
+                                                               v3.7.3)
+  --query.memory-limit <uint64>                                memory threshold per AQL query (in bytes, 0 = no limit) (default: 1252075929)
+  --query.memory-limit-override <boolean>                      allow increasing per-query memory limits for individual queries (default: true) (introduced in v3.
+                                                               8.0)
+  --query.optimizer-max-plans <uint64>                         maximum number of query plans to create for a query (default: 128)
+  --query.parallelize-gather-writes <boolean>                  enable write parallelization for gather nodes (default: true) (introduced in v3.6.0)
+  --query.require-with <boolean>                               whether AQL queries should require the `WITH collection-name` clause even on single servers 
+                                                               (enable this to remove this behavior difference between single server and cluster) (default: 
+                                                               false) (introduced in v3.8.0)
+  --query.slow-streaming-threshold <double>                    threshold for slow streaming AQL queries (in seconds) (default: 10)
+  --query.slow-threshold <double>                              threshold for slow AQL queries (in seconds) (default: 10)
+  --query.tracking <boolean>                                   whether to track queries (default: true)
+  --query.tracking-slow-queries <boolean>                      whether to track slow queries (default: true) (introduced in v3.7.4)
+  --query.tracking-with-bindvars <boolean>                     whether to track bind vars with AQL queries (default: true)
+  --query.tracking-with-datasources <boolean>                  whether to track data sources with AQL queries (default: false) (introduced in v3.7.4)
+  --query.tracking-with-querystring <boolean>                  whether to track the query string (default: true) (introduced in v3.7.4)
+
+Section 'replication' (Configure the replication)
+  --replication.active-failover <boolean>                      Enable active-failover during asynchronous replication (default: false)
+  --replication.connect-timeout <double>                       Default timeout value for replication connection attempts (in seconds) (default: 10) (introduced 
+                                                               in v3.4.9, v3.5.4)
+  --replication.request-timeout <double>                       Default timeout value for replication requests (in seconds) (default: 600) (introduced in v3.4.9, 
+                                                               v3.5.4)
+  --replication.sync-by-revision <boolean>                     Whether to use the newer revision-based replication protocol (default: true) (introduced in v3.7.0)
+
+Section 'rocksdb' (Configure the RocksDB engine)
+  --rocksdb.block-align-data-blocks <boolean>                  if true, aligns data blocks on lesser of page size and block size (default: false)
+  --rocksdb.block-cache-shard-bits <int64>                     number of shard bits to use for block cache (use -1 for default value) (default: -1)
+  --rocksdb.block-cache-size <uint64>                          size of block cache in bytes (default: 268435456)
+  --rocksdb.compaction-read-ahead-size <uint64>                if non-zero, we perform bigger reads when doing compaction. If you're running RocksDB on spinning 
+                                                               disks, you should set this to at least 2MB. that way RocksDB's compaction is doing sequential 
+                                                               instead of random reads. (default: 2097152)
+  --rocksdb.dynamic-level-bytes <boolean>                      if true, determine the number of bytes for each level dynamically to minimize space amplification 
+                                                               (default: true)
+  --rocksdb.enable-pipelined-write <boolean>                   if true, use a two stage write queue for WAL writes and memtable writes (default: false)
+  --rocksdb.enable-statistics <boolean>                        whether or not RocksDB statistics should be turned on (default: false)
+  --rocksdb.enforce-block-cache-size-limit <boolean>           if true, strictly enforces the block cache size limit (default: false)
+  --rocksdb.intermediate-commit-count <uint64>                 an intermediate commit will be performed automatically when this number of operations is reached 
+                                                               in a transaction (default: 1000000)
+  --rocksdb.intermediate-commit-size <uint64>                  an intermediate commit will be performed automatically when a transaction has accumulated 
+                                                               operations of this size (in bytes) (default: 536870912)
+  --rocksdb.level0-compaction-trigger <int64>                  number of level-0 files that triggers a compaction (default: 2)
+  --rocksdb.level0-slowdown-trigger <int64>                    number of level-0 files that triggers a write slowdown (default: 20)
+  --rocksdb.level0-stop-trigger <int64>                        number of level-0 files that triggers a full write stall (default: 36)
+  --rocksdb.max-bytes-for-level-base <uint64>                  if not using dynamic level sizes, this controls the maximum total data size for level-1 (default: 
+                                                               268435456)
+  --rocksdb.max-bytes-for-level-multiplier <double>            if not using dynamic level sizes, the maximum number of bytes for level L can be calculated as  
+                                                               max-bytes-for-level-base * (max-bytes-for-level-multiplier ^ (L-1)) (default: 10)
+  --rocksdb.max-parallel-compactions <uint64>                  maximum number of parallel compactions jobs (default: 2) (introduced in v3.7.11)
+  --rocksdb.max-subcompactions <uint64>                        maximum number of concurrent subjobs for a background compaction (default: 1)
+  --rocksdb.max-total-wal-size <uint64>                        maximum total size of WAL files that will force flush stale column families (default: 83886080)
+  --rocksdb.max-transaction-size <uint64>                      transaction size limit (in bytes) (default: 18446744073709551615)
+  --rocksdb.max-write-buffer-number <uint64>                   maximum number of write buffers that build up in memory (default: number of column families + 2 = 
+                                                               9 write buffers). You can increase the amount only (default: 9)
+  --rocksdb.max-write-buffer-size-to-maintain <int64>          maximum size of immutable write buffers that build up in memory per column family (larger values 
+                                                               mean that more in-memory data can be used for transaction conflict checking (-1 = use automatic 
+                                                               default value, 0 = do not keep immutable flushed write buffers, which is the default and usually 
+                                                               correct)) (default: 0) (introduced in v3.7.3)
+  --rocksdb.min-write-buffer-number-to-merge <uint64>          minimum number of write buffers that will be merged together before writing to storage (default: 1)
+  --rocksdb.minimum-disk-free-bytes <uint64>                   minimum number of free disk bytes for considering the server healthy in health checks (set to 0 to 
+                                                               disable the check) (default: 16777216) (introduced in v3.8.0)
+  --rocksdb.minimum-disk-free-percent <double>                 minimum percentage of free disk space for considering the server healthy in health checks (set to 
+                                                               0 to disable the check) (default: 0.01) (introduced in v3.8.0)
+  --rocksdb.num-levels <uint64>                                number of levels for the database (default: 7)
+  --rocksdb.num-threads-priority-high <uint32>                 number of threads for high priority operations (e.g. flush) (default: 0)
+  --rocksdb.num-threads-priority-low <uint32>                  number of threads for low priority operations (e.g. compaction) (default: 0)
+  --rocksdb.num-uncompressed-levels <uint64>                   number of uncompressed levels for the database (default: 2)
+  --rocksdb.sync-interval <uint64>                             interval for automatic, non-requested disk syncs (in milliseconds, use 0 to turn automatic syncing 
+                                                               off) (default: 100)
+  --rocksdb.table-block-size <uint64>                          approximate size (in bytes) of user data packed per block (default: 16384)
+  --rocksdb.target-file-size-base <uint64>                     per-file target file size for compaction (in bytes). the actual target file size for each level is 
+                                                               `--rocksdb.target-file-size-base` multiplied by `--rocksdb.target-file-size-multiplier` ^ (level - 
+                                                               1) (default: 67108864) (introduced in v3.7.1)
+  --rocksdb.target-file-size-multiplier <uint64>               multiplier for `--rocksdb.target-file-size`, a value of 1 means that files in different levels 
+                                                               will have the same size (default: 1) (introduced in v3.7.1)
+  --rocksdb.throttle <boolean>                                 enable write-throttling (default: true)
+  --rocksdb.total-write-buffer-size <uint64>                   maximum total size of in-memory write buffers (0 = unbounded) (default: 536870912)
+  --rocksdb.transaction-lock-timeout <int64>                   If positive, specifies the wait timeout in milliseconds when  a transaction attempts to lock a 
+                                                               document. A negative value is not recommended as it can lead to deadlocks (0 = no waiting, < 0 no 
+                                                               timeout) (default: 1000)
+  --rocksdb.wal-directory <string>                             optional path to the RocksDB WAL directory. If not set, the WAL directory will be located inside 
+                                                               the regular data directory (default: "")
+  --rocksdb.wal-file-timeout <double>                          timeout after which unused WAL files are deleted (default: 10)
+  --rocksdb.write-buffer-size <uint64>                         amount of data to build up in memory before converting to a sorted on-disk file (0 = disabled) 
+                                                               (default: 67108864)
+
+Section 'server' (Server features)
+  --server.authentication <boolean>                            enable authentication for ALL client requests (default: true)
+  --server.authentication-system-only <boolean>                use HTTP authentication only for requests to /_api and /_admin (default: true)
+  --server.authentication-timeout <double>                     timeout for the authentication cache in seconds (0 = indefinitely) (default: 0)
+  --server.authentication-unix-sockets <boolean>               authentication for requests via UNIX domain sockets (default: true)
+  --server.descriptors-minimum <uint64>                        minimum number of file descriptors needed to start (0 = no minimum) (default: 8192)
+  --server.endpoint <string...>                                endpoint for client requests (e.g. 'http+tcp://127.0.0.1:8529', or 'vst+ssl://192.168.1.1:8529') 
+                                                               (default: )
+  --server.harden <boolean>                                    lock down REST APIs that reveal version information or server internals for non-admin users 
+                                                               (default: false) (introduced in v3.5.0)
+  --server.io-threads <uint64>                                 Number of threads used to handle IO (default: 1)
+  --server.jwt-secret <string>                                 secret to use when doing jwt authentication (default: "") (deprecated in v3.3.22, v3.4.2)
+  --server.jwt-secret-folder <string>                          folder containing one or more jwt secret files to use for jwt authentication. Files are sorted 
+                                                               alphabetically: First secret is used for signing + verifying JWT tokens. The latter secrets are 
+                                                               only used for verifying. (default: "") (introduced in v3.7.0)
+  --server.jwt-secret-keyfile <string>                         file containing jwt secret to use when doing jwt authentication. (default: "")
+  --server.local-authentication <boolean>                      enable authentication using the local user database (default: true)
+  --server.maximal-queue-size <uint64>                         size of the priority 3 fifo (default: 4096)
+  --server.maximal-threads <uint64>                            maximum number of request handling threads to run (0 = use system-specific default of 32) 
+                                                               (default: 0)
+  --server.statistics <boolean>                                turn statistics gathering on or off (default: true)
+  --server.statistics-all-databases <boolean>                  provide cluster statistics in web interface in all databases (default: true) (introduced in v3.8.0)
+  --server.statistics-history <boolean>                        turn storing statistics in database on or off (default: true) (introduced in v3.4.9, v3.5.1)
+  --server.storage-engine <string>                             storage engine type (note that the mmfiles engine is unavailable since v3.7.0 and cannot be used 
+                                                               anymore). Possible values: "auto", "rocksdb" (default: "auto")
+  --server.unavailability-queue-fill-grade <double>            queue fill grade from which onwards the server is considered unavailable because of overload 
+                                                               (ratio, use a value of 0 to disable it) (default: 0.75) (introduced in v3.6.10, v3.7.6)
+
+Section 'ssl' (Configure SSL communication)
+  --ssl.cafile <string>                                        ca file used for secure connections (default: "")
+  --ssl.cipher-list <string>                                   ssl ciphers to use, see OpenSSL documentation (default: "HIGH:!EXPORT:!aNULL@STRENGTH")
+  --ssl.ecdh-curve <string>                                    SSL ECDH Curve, see the output of "openssl ecparam -list_curves" (default: "prime256v1")
+  --ssl.keyfile <string>                                       key-file used for secure connections (default: "")
+  --ssl.prefer-http1-in-alpn <boolean>                         Allows to let the server prefer HTTP/1.1 over HTTP/2 in ALPN protocol negotiations (default: false)
+  --ssl.protocol <uint64>                                      ssl protocol (1 = SSLv2 (unsupported), 2 = SSLv2 or SSLv3 (negotiated), 3 = SSLv3, 4 = TLSv1, 5 = 
+                                                               TLSv1.2, 6 = TLSv1.3, 9 = generic TLS). Possible values: 1, 2, 3, 4, 5, 6, 9 (default: 9)
+  --ssl.session-cache <boolean>                                enable the session cache for connections (default: false)
+
+Section 'temp' (Configure temporary files)
+  --temp.path <string>                                         path for temporary files (default: "")
+
+Section 'transaction' (Transaction features)
+  --transaction.streaming-idle-timeout <double>                idle timeout for streaming transactions in seconds (default: 60) (introduced in v3.8.0)
+
+Section 'ttl' (TTL options)
+  --ttl.frequency <uint64>                                     frequency (in milliseconds) for the TTL background thread invocation. a value of 0 turns the TTL 
+                                                               background thread off entirely (default: 30000)
+  --ttl.max-collection-removes <uint64>                        maximum number of documents to remove per collection (default: 1000000)
+  --ttl.max-total-removes <uint64>                             maximum number of documents to remove per invocation of the TTL thread (default: 1000000)
+
+For more information use:  --help-agency  --help-arangosearch  --help-cache  --help-cluster  --help-database  --help-foxx  --help-frontend  --help-http  --help-javascript  --help-log  --help-network  --help-nonce  --help-query  --help-replication  --help-rocksdb  --help-server  --help-ssl  --help-temp  --help-transaction  --help-ttl
