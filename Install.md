@@ -10,8 +10,7 @@
 
 - server-name: ubuntu-arango--srv01
 - version: 20.04
-- user: alex
-- pass: 123456
+
 
 Устанавливается БД и пакеты символов отладки
 
@@ -38,9 +37,6 @@ $ nano /etc/arangodb3/arangod.conf
 
 Пакеты на основе Debian и установщик Windows запрашивают пароль во время процесса установки. Пакеты на основе Red Hat устанавливают случайный пароль. Для всех других пакетов установки необходимо выполнить следующее:
 
-```bash
-shell> arango-secure-installation
-```
 
 ## Alt Linux 8 SP
 

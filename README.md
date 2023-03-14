@@ -1,3 +1,4 @@
+
 # Инструкции по работе с ArangoDB
 
 
@@ -5,7 +6,9 @@
 
 - [Установка СУБД на ОС](Install.md)
 
-- [Запуск через ArangoDB Starter](starter/README.md)
+- [Запуск через ArangoDB Starter](arangodb_starter/README.md)
+
+- [Запуск вручную](arango_manual/README.md)
 
 - [Установка Kubernetes](install_kubernetes.md)
 
