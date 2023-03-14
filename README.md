@@ -11,5 +11,3 @@
 - [Запуск вручную](arango_manual/README.md)
 
 - [Установка Kubernetes](install_kubernetes.md)
-
-test
