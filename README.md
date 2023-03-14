@@ -12,4 +12,4 @@
 
 - [Установка Kubernetes](install_kubernetes.md)
 
-
+test
