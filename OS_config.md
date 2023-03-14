@@ -35,3 +35,6 @@ sudo bash -c "echo madvise >/sys/kernel/mm/transparent_hugepage/defrag"
 sudo bash -c "sysctl -w 'vm.max_map_count=2048000'"
 
 но лучше внести данные значения в файл /etc/sysctl.d/fliename.conf
+
+
+[Назад](README.md)

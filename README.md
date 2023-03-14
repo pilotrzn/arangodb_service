@@ -1,7 +1,12 @@
 # Инструкции по работе с ArangoDB
 
-- [Установка СУБД. Single Instance](Install.md)
+
+- [Конфигурация операцинной системы](OS_config.md)
+
+- [Установка СУБД на ОС](Install.md)
+
+- [Запуск через ArangoDB Starter](starter/README.md)
 
 - [Установка Kubernetes](install_kubernetes.md)
 
-- [Конфигурация операцинной системы](OS_config.md)
+

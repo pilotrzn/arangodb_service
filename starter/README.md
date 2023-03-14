@@ -5,9 +5,13 @@
 
 Варианты развертывания:
 
-1. Single mode
-2. Active Failover
-3. Cluster
+1. [Single mode](./single.md)
+
+2. [Active Failover](./active_failover.md)
+
+3. [Cluster](./cluster.md)
+
+---
 
 Режим выбирается опцией --starter.mode. 
 
@@ -17,3 +21,5 @@
 
 В cluster режиме один Starter запускает не более одного агента, одного DB-сервера и одного координатора.
 
+
+[Назад](../README.md)

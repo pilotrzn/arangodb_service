@@ -1,5 +1,11 @@
 # Установка БД ArangoDB
 
+- [Установка на Ubuntu](#ubuntu-server)
+
+- [Установка на Альт сервер 8 СП](#alt-linux-8-sp)
+
+- [Установка на Альт сервер 9](#alt-linux-9)
+
  ## Ubuntu server
 
 - server-name: ubuntu-arango--srv01
@@ -19,17 +25,14 @@
 ~# sudo apt-get install arangodb3-dbg=3.10.2-1
 ```
 
-- root
-pass: 654321
-- alex
-pass: 123
-
 Доступ к вебморде:
 
-nano /etc/arangodb3/arangod.conf
-endpoint = tcp://localhost:8529
- заменить на ip сервера. выполнить перезапуск службы
+```bash
+$ nano /etc/arangodb3/arangod.conf
+ endpoint = tcp://localhost:8529
+```
 
+Заменить на ip сервера. выполнить перезапуск службы
 
 Установка по умолчанию содержит одну базу данных _system и имя пользователя root.
 
@@ -47,12 +50,12 @@ shell> arango-secure-installation
 
 ## Alt Linux 9
 
-На этой версии можно установить последнюю версию Arango - 3.10
+На этой версии можно установить последнюю версию Arango - 3.10.
 Установка выполняется из пакета rpm.
 Предварительно необходимо установить tzdata
 
 
-
+[Назад](README.md)
 
 
 
