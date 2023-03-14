@@ -5,7 +5,69 @@
 
 Используется асинхронный режим репликации(с использованием WAL).
 
+Вариант с 3 агентами и 2 нодами БД, пример на 1 ВМ, используеются разные порты.
 
+Сначала запускается а экземпляра Agency:
+
+```bash
+arangod --server.endpoint tcp://0.0.0.0:5001 \
+  --agency.my-address=tcp://127.0.0.1:5001 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.endpoint tcp://127.0.0.1:5001 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory agent1 &
+   
+arangod --server.endpoint tcp://0.0.0.0:5002 \
+  --agency.my-address=tcp://127.0.0.1:5002 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.endpoint tcp://127.0.0.1:5001 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory agent2 &
+
+arangod --server.endpoint tcp://0.0.0.0:5003 \
+  --agency.my-address=tcp://127.0.0.1:5003 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.endpoint tcp://127.0.0.1:5001 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory agent3 &
+```
+
+Все экземпляры создадутся в текущем каталоге, для каждого будет создан каталог, указанный в  --database.directory.
+
+Стоит обратить внимание, что во избежание ненужных сбоев может иметь смысл увеличить значение параметра запуска --agency.supervision-grace-period до значения, превышающего 30 секунд.
+
+Далее запускаются 2 одиночных экземпляра:
+
+```bash
+arangod --server.authentication false \
+  --server.endpoint tcp://127.0.0.1:6001 \
+  --cluster.my-address tcp://127.0.0.1:6001 \
+  --cluster.my-role SINGLE \
+  --cluster.agency-endpoint tcp://127.0.0.1:5001 \
+  --cluster.agency-endpoint tcp://127.0.0.1:5002 \
+  --cluster.agency-endpoint tcp://127.0.0.1:5003 \ 
+  --replication.automatic-failover true \
+  --database.directory singleserver6001 &
+ 
+arangod --server.authentication false \
+  --server.endpoint tcp://127.0.0.1:6002 \
+  --cluster.my-address tcp://127.0.0.1:6002 \
+  --cluster.my-role SINGLE \
+  --cluster.agency-endpoint tcp://127.0.0.1:5001 \
+  --cluster.agency-endpoint tcp://127.0.0.1:5002 \
+  --cluster.agency-endpoint tcp://127.0.0.1:5003 \
+  --replication.automatic-failover true \
+  --database.directory singleserver6002 &
+```
 
 
 [Назад](./README.md)
