@@ -69,5 +69,80 @@ arangod --server.authentication false \
   --database.directory singleserver6002 &
 ```
 
+## Вариант с несколькими машинами(ВМ)
+
+### Инстансы Agency 
+
+- ВМ 192.168.122.84
+
+```bash
+arangod --server.endpoint tcp://0.0.0.0:8531 \
+  --agency.my-address tcp://192.168.122.84:8531 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory /arangodb/agent
+```
+
+- ВМ 192.168.122.107
+
+```bash
+arangod --server.endpoint tcp://0.0.0.0:8531 \
+  --agency.my-address tcp://192.168.122.107:8531 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory /arangodb/agent
+```
+
+- ВМ 192.168.122.168
+
+```bash
+arangod --server.endpoint tcp://0.0.0.0:8531 \
+  --agency.my-address tcp://192.168.122.168:8531 \
+  --server.authentication false \
+  --agency.activate true \
+  --agency.size 3 \
+  --agency.endpoint tcp://192.168.122.84:8531 \
+  --agency.endpoint tcp://192.168.122.107:8531 \
+  --agency.endpoint tcp://192.168.122.168:8531 \
+  --agency.supervision true \
+  --agency.supervision-grace-period 30 \
+  --database.directory /arangodb/agent &
+```
+
+### Инстансы БД
+
+- ВМ 192.168.122.84
+
+```bash
+arangod --server.authentication=false \
+  --server.endpoint tcp://0.0.0.0:8529 \
+  --cluster.my-address tcp://192.168.122.84:8529 \
+  --cluster.my-role SINGLE \
+  --cluster.agency-endpoint tcp://192.168.122.84:8531 \
+  --cluster.agency-endpoint tcp://192.168.122.107:8531 \
+  --cluster.agency-endpoint tcp://192.168.122.168:8531 \
+  --replication.automatic-failover true \
+  --database.directory /arangodb/singleserver &
+```
+
+- ВМ 192.168.122.107
+
+```bash
+arangod --server.authentication=false \
+  --server.endpoint tcp://0.0.0.0:8529 \
+  --cluster.my-address tcp://192.168.122.107:8529 \
+  --cluster.my-role SINGLE \
+  --cluster.agency-endpoint tcp://192.168.122.84:8531 \
+  --cluster.agency-endpoint tcp://192.168.122.107:8531 \
+  --cluster.agency-endpoint tcp://192.168.122.168:8531 \
+  --replication.automatic-failover true \
+  --database.directory /arangodb/singleserver &
+```
 
 [Назад](./README.md)
