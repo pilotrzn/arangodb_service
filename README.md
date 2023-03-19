@@ -12,4 +12,4 @@
 
 - [Кластер](cluster/README.md)
 
-- [Установка Kubernetes](install_kubernetes.md)
+- [Установка Kubernetes](kubernetes/README.md)
