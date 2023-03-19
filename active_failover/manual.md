@@ -118,7 +118,7 @@ arangod --server.endpoint tcp://0.0.0.0:8531 \
   --agency.endpoint tcp://192.168.122.168:8531 \
   --agency.supervision true \
   --agency.supervision-grace-period 30 \
-  --database.directory /arangodb/agent &
+  --database.directory /arangodb/agent
 ```
 
 ### Инстансы БД
